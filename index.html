@@ -15,40 +15,45 @@
 
 
 
-  <header class="site-header">
-    <div class="header-bar">
-      <a class="header-logo" href="#inicio">VAPEZRT</a>
-      <nav class="header-nav" aria-label="Secciones principales">
-        <a href="#productos">Productos</a>
-        <a href="#contacto">Contacto</a>
-      </nav>
-      <a class="header-cta" href="https://wa.me/5493487652952" target="_blank" rel="noopener">Comprar ahora</a>
+  <header class="site-header" id="inicio">
+    <div class="header-top">
+      <div class="header-bar">
+        <a class="header-logo" href="#inicio">VAPEZRT</a>
+        <nav class="header-nav" aria-label="Secciones principales">
+          <a href="#productos">Productos</a>
+          <a href="#contacto">Contacto</a>
+        </nav>
+        <a class="header-cta" href="https://wa.me/5493487652952" target="_blank" rel="noopener">Comprar ahora</a>
+      </div>
+      <div class="header-announcement" aria-live="polite">
+        <div class="anuncio-carrusel">
+          <div class="mensaje" id="mensaje-rotativo">📱 Seguinos en Instagram @vapezrt_</div>
+        </div>
+      </div>
     </div>
-    <div class="header-announcement" aria-live="polite">
-      <div class="anuncio-carrusel">
-        <div class="mensaje" id="mensaje-rotativo">📱 Seguinos en Instagram @vapezrt_</div>
+    <div class="header-visual">
+      <video class="header-video" autoplay muted loop playsinline preload="metadata" poster="/assets/2023_1120_Ignite_Lifestyle_MikeKirschbaum_016_1_1000x.webp">
+        <source src="/assets/Ink-35508-1.mp4" type="video/mp4" />
+      </video>
+      <div class="section-container header-visual-content">
+        <div class="header-copy">
+          <span class="hero-badge">Experiencias premium</span>
+          <h1>Explorá nuestros sabores</h1>
+          <p>Los mejores pods y desechables, curados para que encuentres tu vapor ideal al instante.</p>
+        </div>
       </div>
     </div>
   </header>
 
-<section class="hero" id="inicio">
-  <video class="hero-video" autoplay muted loop playsinline>
-    <source src="/assets/Ink-35508-1.mp4" type="video/mp4" />
-  </video>
-  <div class="section-container hero-layout">
-    <div class="hero-card">
-      <div class="hero-contenido">
-        <span class="hero-badge">Experiencias premium</span>
-        <h1>Explorá nuestros sabores</h1>
-        <p>Los mejores pods y desechables, curados para que encuentres tu vapor ideal al instante.</p>
-        <form class="hero-busqueda" role="search">
-          <label class="sr-only" for="buscador">Buscar productos</label>
-          <input type="search" id="buscador" name="buscador" placeholder="Buscar productos... 🔍" autocomplete="off" />
-        </form>
-      </div>
+<section class="hero" aria-labelledby="galeria-title">
+  <div class="section-container hero-gallery">
+    <div class="hero-gallery-main">
+      <img id="hero-imagen" src="/assets/2023_1120_Ignite_Lifestyle_MikeKirschbaum_016_1_1000x.webp" alt="Dispositivo vape color negro iluminado" />
     </div>
-    <div class="hero-visual" aria-hidden="true">
-      <img id="hero-imagen" src="/assets/2023_1120_Ignite_Lifestyle_MikeKirschbaum_016_1_1000x.webp" alt="Vaper destacado" />
+    <div class="hero-gallery-stack" aria-labelledby="galeria-title">
+      <h2 id="galeria-title" class="sr-only">Galería de sabores destacados</h2>
+      <img src="assets/Imagen de WhatsApp 2025-07-17 a las 22.23.09_bf985f76.webp.jpg" alt="Variedad de vapers sobre fondo azul" loading="lazy" />
+      <img src="/assets/Imagen de WhatsApp 2025-07-18 a las 01.27.53_af5c1526.jpg" alt="Detalle de pod con luces de neón" loading="lazy" />
     </div>
   </div>
 </section>
@@ -66,7 +71,27 @@
         <div class="beneficio">🎯 Productos 100% originales</div>
       </div>
     </div>
+  </div>
+</section>
 
+<section class="busqueda-section">
+  <div class="section-container">
+    <div class="hero-card">
+      <div class="hero-contenido">
+        <span class="hero-badge">Buscá tu próximo pod</span>
+        <h2>Encontrá tu sabor favorito</h2>
+        <p>Filtrá por marca, sabor o formato y descubrí qué vaper combina mejor con tu estilo.</p>
+        <form class="hero-busqueda" role="search">
+          <label class="sr-only" for="buscador">Buscar productos</label>
+          <input type="search" id="buscador" name="buscador" placeholder="Buscar productos... 🔍" autocomplete="off" />
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="productos-grid-section">
+  <div class="section-container">
     <main id="productos" class="productos">
       <!-- Acá se insertan los productos -->
     </main>
