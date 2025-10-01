@@ -63,129 +63,6 @@
 </footer>
 
 
-<script>
-  // Rotación del mensaje superior
-  const mensajes = [
-    "📱 Seguinos en Instagram @vapezrt_",
-    "🕒 Horarios: lunes a lunes de 10 AM a 00:00"
-  ];
-
-  let index = 0;
-  const mensajeEl = document.getElementById("mensaje-rotativo");
-
-  function actualizarMensaje() {
-    mensajeEl.textContent = mensajes[index];
-    mensajeEl.style.animation = "none";
-    void mensajeEl.offsetWidth;
-    mensajeEl.style.animation = "slide 16s linear infinite";
-    index = (index + 1) % mensajes.length;
-  }
-
-  setInterval(actualizarMensaje, 16000);
-</script>
-
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyBkCmjY9pCUXLia-fsw9Od4AybFxRzCAjg",
-    authDomain: "vapezrt-56f20.firebaseapp.com",
-    projectId: "vapezrt-56f20",
-    storageBucket: "vapezrt-56f20.appspot.com",
-    messagingSenderId: "1000261974016",
-    appId: "1:1000261974016:web:281161e24522eb2bee00e5",
-    measurementId: "G-B84Z2N19NE"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  const contenedor = document.querySelector(".productos");
-  contenedor.innerHTML = "";
-
-  const buscador = document.getElementById("buscador");
-
-  async function cargarProductos() {
-    try {
-      const querySnapshot = await getDocs(collection(db, "productos"));
-      querySnapshot.forEach((doc) => {
-        const prod = doc.data();
-
-        const tarjeta = document.createElement("div");
-        tarjeta.classList.add("producto");
-
-        tarjeta.innerHTML = `
-          <img src="${prod.imagen}" alt="${prod.nombre}">
-          <h3>${prod.nombre}</h3>
-          <p>${prod.sabor}</p>
-        `;
-
-        // Evento clic para abrir modal
-        tarjeta.addEventListener("click", () => {
-          document.getElementById("modal-img").src = prod.imagen;
-          document.getElementById("modal-nombre").textContent = prod.nombre;
-          document.getElementById("modal-sabor").textContent = prod.sabor;
-          // document.getElementById("modal-stock").textContent = "Stock: " + prod.stock;
-          document.getElementById("modal-wsp").href = `https://wa.me/5493487652952?text=Hola!%20Estoy%20interesado%20en%20${encodeURIComponent(prod.nombre)}%20(${encodeURIComponent(prod.sabor)})`;
-          document.getElementById("modal").classList.remove("hidden");
-        });
-
-        contenedor.appendChild(tarjeta);
-      });
-
-      // Buscador funcional después de que los productos se renderizan
-      buscador.addEventListener("input", () => {
-        const filtro = buscador.value.toLowerCase();
-        const tarjetas = document.querySelectorAll(".producto");
-
-        tarjetas.forEach((card) => {
-          const texto = card.innerText.toLowerCase();
-          card.style.display = texto.includes(filtro) ? "block" : "none";
-        });
-      });
-
-    } catch (error) {
-      console.error("Error al cargar productos:", error);
-      contenedor.innerHTML = "<p>No se pudieron cargar los productos.</p>";
-    }
-  }
-
-  cargarProductos();
-</script>
-
-<script>
-  // Lógica para cerrar el modal
-  document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("cerrarModal").addEventListener("click", () => {
-      document.getElementById("modal").classList.add("hidden");
-    });
-
-    window.addEventListener("click", (e) => {
-      const modal = document.getElementById("modal");
-      if (e.target === modal) {
-        modal.classList.add("hidden");
-      }
-    });
-  });
-</script>
-<script>
-  const imagenesHero = [
-    "/assets/2023_1120_Ignite_Lifestyle_MikeKirschbaum_016_1_1000x.webp",
-    "assets/Imagen de WhatsApp 2025-07-17 a las 22.23.09_bf985f76.webp.jpg",
-    "/assets/Imagen de WhatsApp 2025-07-18 a las 01.27.53_af5c1526.jpg"
-  ];
-
-  let indexHero = 0;
-  const heroImg = document.getElementById("hero-imagen");
-
-  setInterval(() => {
-    indexHero = (indexHero + 1) % imagenesHero.length;
-    heroImg.src = imagenesHero[indexHero];
-  }, 5000); // cambia cada 5 segundos
-</script>
-
-
 <div id="modal" class="modal hidden">
   <div class="modal-content">
     <span id="cerrarModal" class="cerrar">&times;</span>
@@ -197,6 +74,9 @@
   </div>
 </div>
 
+
+<script src="scripts/main.js" defer></script>
+<script type="module" src="scripts/firebase.js"></script>
 
 </body>
 </html>
