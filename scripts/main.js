@@ -35,6 +35,34 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 5000);
   }
 
+  const headerVideo = document.querySelector(".header-video");
+  if (headerVideo instanceof HTMLVideoElement) {
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    const handleMotionPreference = () => {
+      if (motionQuery.matches) {
+        headerVideo.pause();
+        headerVideo.removeAttribute("autoplay");
+        headerVideo.currentTime = 0;
+        headerVideo.load();
+      } else {
+        headerVideo.setAttribute("autoplay", "autoplay");
+        const playPromise = headerVideo.play();
+        if (playPromise && typeof playPromise.then === "function") {
+          playPromise.catch(() => {});
+        }
+      }
+    };
+
+    handleMotionPreference();
+
+    if (typeof motionQuery.addEventListener === "function") {
+      motionQuery.addEventListener("change", handleMotionPreference);
+    } else if (typeof motionQuery.addListener === "function") {
+      motionQuery.addListener(handleMotionPreference);
+    }
+  }
+
   const cerrarModal = document.getElementById("cerrarModal");
   const cerrarSecundario = document.getElementById("modal-close-secondary");
   const modal = document.getElementById("modal");
