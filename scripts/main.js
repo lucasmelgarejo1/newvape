@@ -36,15 +36,33 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const cerrarModal = document.getElementById("cerrarModal");
+  const cerrarSecundario = document.getElementById("modal-close-secondary");
   const modal = document.getElementById("modal");
-  if (cerrarModal && modal) {
-    cerrarModal.addEventListener("click", () => {
+
+  const closeModal = () => {
+    if (modal) {
       modal.classList.add("hidden");
-    });
+    }
+  };
+
+  if (modal) {
+    if (cerrarModal) {
+      cerrarModal.addEventListener("click", closeModal);
+    }
+
+    if (cerrarSecundario) {
+      cerrarSecundario.addEventListener("click", closeModal);
+    }
 
     window.addEventListener("click", (event) => {
       if (event.target === modal) {
-        modal.classList.add("hidden");
+        closeModal();
+      }
+    });
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        closeModal();
       }
     });
   }

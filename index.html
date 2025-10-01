@@ -32,23 +32,23 @@
   </header>
 
 <section class="hero" id="inicio">
+  <video class="hero-video" autoplay muted loop playsinline>
+    <source src="/assets/Ink-35508-1.mp4" type="video/mp4" />
+  </video>
   <div class="section-container hero-layout">
-    <div class="hero-contenido">
-      <span class="hero-badge">Experiencias premium</span>
-      <h1>Explorá nuestros sabores</h1>
-      <p>Los mejores pods y desechables, curados para que encuentres tu vapor ideal al instante.</p>
-      <form class="hero-busqueda" role="search">
-        <label class="sr-only" for="buscador">Buscar productos</label>
-        <input type="search" id="buscador" name="buscador" placeholder="Buscar productos... 🔍" autocomplete="off" />
-      </form>
+    <div class="hero-card">
+      <div class="hero-contenido">
+        <span class="hero-badge">Experiencias premium</span>
+        <h1>Explorá nuestros sabores</h1>
+        <p>Los mejores pods y desechables, curados para que encuentres tu vapor ideal al instante.</p>
+        <form class="hero-busqueda" role="search">
+          <label class="sr-only" for="buscador">Buscar productos</label>
+          <input type="search" id="buscador" name="buscador" placeholder="Buscar productos... 🔍" autocomplete="off" />
+        </form>
+      </div>
     </div>
     <div class="hero-visual" aria-hidden="true">
-      <div class="hero-media">
-        <img id="hero-imagen" src="/assets/2023_1120_Ignite_Lifestyle_MikeKirschbaum_016_1_1000x.webp" alt="Vaper destacado" />
-        <video class="hero-video" autoplay muted loop playsinline>
-          <source src="/assets/Ink-35508-1.mp4" type="video/mp4" />
-        </video>
-      </div>
+      <img id="hero-imagen" src="/assets/2023_1120_Ignite_Lifestyle_MikeKirschbaum_016_1_1000x.webp" alt="Vaper destacado" />
     </div>
   </div>
 </section>
@@ -105,14 +105,22 @@
 </footer>
 
 
-<div id="modal" class="modal hidden">
+<div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-nombre">
   <div class="modal-content">
-    <span id="cerrarModal" class="cerrar">&times;</span>
-    <img id="modal-img" src="" alt="">
-    <h3 id="modal-nombre"></h3>
-    <p id="modal-sabor"></p>
-    <!-- <p id="modal-stock"></p> -->
-    <a id="modal-wsp" href="#" target="_blank" class="btn-wsp">Consultar por WhatsApp</a>
+    <button id="cerrarModal" class="modal-close" type="button" aria-label="Cerrar modal">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <div class="modal-media">
+      <img id="modal-img" src="" alt="" />
+    </div>
+    <div class="modal-details">
+      <h3 id="modal-nombre"></h3>
+      <p id="modal-sabor"></p>
+      <div class="modal-actions">
+        <a id="modal-wsp" href="#" target="_blank" rel="noopener" class="modal-action-primary btn-wsp">Añadir</a>
+        <button type="button" id="modal-close-secondary" class="modal-action-secondary">Cerrar</button>
+      </div>
+    </div>
   </div>
 </div>
 
