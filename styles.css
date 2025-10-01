@@ -118,10 +118,26 @@ button {
   overflow: hidden;
 }
 
+.site-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.82) 0%, rgba(255, 255, 255, 0.68) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.header-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: url('/assets/2023_1120_Ignite_Lifestyle_MikeKirschbaum_016_1_1000x.webp') center / cover no-repeat;
+}
+
 .header-top {
   position: sticky;
   top: 0;
-  z-index: 20;
+  z-index: 2;
   background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--color-border);
@@ -239,14 +255,7 @@ button {
   align-items: center;
   justify-content: center;
   padding: clamp(64px, 12vw, 96px) 0;
-}
-
-.header-visual::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.82) 0%, rgba(255, 255, 255, 0.68) 100%);
-  z-index: -1;
+  z-index: 2;
 }
 
 .header-video {
@@ -255,12 +264,11 @@ button {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: -2;
 }
 
 .header-visual-content {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   width: 100%;
   display: flex;
   justify-content: flex-start;
@@ -300,6 +308,12 @@ button {
   gap: clamp(20px, 6vw, 40px);
   align-items: stretch;
   min-height: 54vh;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header-media video {
+    display: none;
+  }
 }
 
 .hero-gallery-main,
