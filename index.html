@@ -15,51 +15,67 @@
 
 
 
-  <header class="video-header">
-  <video autoplay muted loop playsinline>
-    <source src="/assets/Ink-35508-1.mp4" type="video/mp4" />
-    Tu navegador no soporta videos HTML5.
-  </video>
-  <div class="overlay">
-     <div class="anuncio-carrusel">
-      <div class="mensaje" id="mensaje-rotativo">📱 Seguinos en Instagram @vapezrt_</div>
+  <header class="site-header">
+    <div class="header-bar">
+      <a class="header-logo" href="#inicio">VAPEZRT</a>
+      <nav class="header-nav" aria-label="Secciones principales">
+        <a href="#productos">Productos</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+      <a class="header-cta" href="https://wa.me/5493487652952" target="_blank" rel="noopener">Comprar ahora</a>
     </div>
-    <h1>VAPEZRT</h1>
-    <div class="busqueda">
-    <input type="text" id="buscador" placeholder="Buscar productos... 🔍" />
-  </div>
-  </div>
-</header> 
+    <div class="header-announcement" aria-live="polite">
+      <div class="anuncio-carrusel">
+        <div class="mensaje" id="mensaje-rotativo">📱 Seguinos en Instagram @vapezrt_</div>
+      </div>
+    </div>
+  </header>
 
-<section class="hero">
-  <img id="hero-imagen" src="/assets/2023_1120_Ignite_Lifestyle_MikeKirschbaum_016_1_1000x.webp" alt="Portada de Vapers" />
-  <div class="hero-texto">
-    <h2>Explorá nuestros sabores</h2>
-    <p>Los mejores sabores, los mejores precios.</p>
+<section class="hero" id="inicio">
+  <div class="section-container hero-layout">
+    <div class="hero-contenido">
+      <span class="hero-badge">Experiencias premium</span>
+      <h1>Explorá nuestros sabores</h1>
+      <p>Los mejores pods y desechables, curados para que encuentres tu vapor ideal al instante.</p>
+      <form class="hero-busqueda" role="search">
+        <label class="sr-only" for="buscador">Buscar productos</label>
+        <input type="search" id="buscador" name="buscador" placeholder="Buscar productos... 🔍" autocomplete="off" />
+      </form>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <div class="hero-media">
+        <img id="hero-imagen" src="/assets/2023_1120_Ignite_Lifestyle_MikeKirschbaum_016_1_1000x.webp" alt="Vaper destacado" />
+        <video class="hero-video" autoplay muted loop playsinline>
+          <source src="/assets/Ink-35508-1.mp4" type="video/mp4" />
+        </video>
+      </div>
+    </div>
   </div>
 </section>
 
 
 <section class="productos-section">
-  <div class="productos-intro">
-    <span class="badge">Nueva temporada</span>
-    <h2>Descubrí el vapor ideal para tu estilo</h2>
-    <p>Elegí entre los pods y desechables más buscados del mercado, curados para que disfrutes sabores intensos y experiencias premium en cada calada.</p>
-    <div class="productos-beneficios">
-      <div class="beneficio">🚚 Envíos rápidos en toda la zona</div>
-      <div class="beneficio">💬 Asesoramiento personalizado 24/7</div>
-      <div class="beneficio">🎯 Productos 100% originales</div>
+  <div class="section-container">
+    <div class="productos-intro">
+      <span class="badge">Nueva temporada</span>
+      <h2>Descubrí el vapor ideal para tu estilo</h2>
+      <p>Elegí entre los pods y desechables más buscados del mercado, curados para que disfrutes sabores intensos y experiencias premium en cada calada.</p>
+      <div class="productos-beneficios">
+        <div class="beneficio">🚚 Envíos rápidos en toda la zona</div>
+        <div class="beneficio">💬 Asesoramiento personalizado 24/7</div>
+        <div class="beneficio">🎯 Productos 100% originales</div>
+      </div>
     </div>
-  </div>
 
-  <main id="productos" class="productos">
-    <!-- Acá se insertan los productos -->
-  </main>
+    <main id="productos" class="productos">
+      <!-- Acá se insertan los productos -->
+    </main>
+  </div>
 </section>
 
 
   <footer id="contacto" class="footer">
-  <div class="footer-contenido">
+  <div class="section-container footer-contenido">
     <div class="footer-grid">
       <div class="footer-brand">
         <h2>VAPEZRT</h2>
