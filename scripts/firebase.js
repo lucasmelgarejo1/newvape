@@ -31,32 +31,88 @@ async function cargarProductos() {
     querySnapshot.forEach((doc) => {
       const prod = doc.data();
 
-      const tarjeta = document.createElement("div");
+      const tarjeta = document.createElement("article");
       tarjeta.classList.add("producto");
 
+      const sanitize = (value) =>
+        String(value ?? "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+
+      const badge = prod.badge || prod.etiqueta;
+      const precio = prod.precio;
+      const nombreRaw = prod.nombre || "";
+      const saborRaw = prod.sabor || "";
+      const imagenRaw = prod.imagen || "";
+      const nombreLimpio = sanitize(nombreRaw);
+      const saborLimpio = sanitize(saborRaw);
+      const imagenLimpia = sanitize(imagenRaw);
+      const badgeMarkup = badge ? `<span class="producto-badge">${sanitize(badge)}</span>` : "";
+      const precioMarkup = precio ? `<p class="producto-precio">${sanitize(precio)}</p>` : "";
+      const whatsappMensaje = encodeURIComponent(
+        `Hola! Estoy interesado en ${nombreRaw}${saborRaw ? ` (${saborRaw})` : ""}`
+      );
+
       tarjeta.innerHTML = `
-        <img src="${prod.imagen}" alt="${prod.nombre}">
-        <h3>${prod.nombre}</h3>
-        <p>${prod.sabor}</p>
+        <div class="producto-media" role="button" tabindex="0" aria-label="Ver detalles de ${nombreLimpio}">
+          <img src="${imagenLimpia}" alt="${nombreLimpio}">
+          ${badgeMarkup}
+        </div>
+        <div class="producto-info">
+          <h3>${nombreLimpio}</h3>
+          <p class="producto-sabor">${saborLimpio}</p>
+          ${precioMarkup}
+        </div>
+        <div class="producto-actions">
+          <a class="producto-btn producto-btn-primary" href="https://wa.me/5493487652952?text=${whatsappMensaje}" target="_blank" rel="noopener">Añadir</a>
+          <button type="button" class="producto-btn producto-btn-secondary" data-action="detalles">Detalles</button>
+        </div>
       `;
 
-      tarjeta.addEventListener("click", () => {
-        const modal = document.getElementById("modal");
-        const modalImg = document.getElementById("modal-img");
-        const modalNombre = document.getElementById("modal-nombre");
-        const modalSabor = document.getElementById("modal-sabor");
-        const modalWsp = document.getElementById("modal-wsp");
+      const modal = document.getElementById("modal");
+      const modalImg = document.getElementById("modal-img");
+      const modalNombre = document.getElementById("modal-nombre");
+      const modalSabor = document.getElementById("modal-sabor");
+      const modalWsp = document.getElementById("modal-wsp");
 
+      const abrirModal = () => {
         if (!modal || !modalImg || !modalNombre || !modalSabor || !modalWsp) {
           return;
         }
 
         modalImg.src = prod.imagen;
         modalNombre.textContent = prod.nombre;
-        modalSabor.textContent = prod.sabor;
-        modalWsp.href = `https://wa.me/5493487652952?text=Hola!%20Estoy%20interesado%20en%20${encodeURIComponent(prod.nombre)}%20(${encodeURIComponent(prod.sabor)})`;
+        modalSabor.textContent = prod.sabor || "";
+        modalWsp.href = `https://wa.me/5493487652952?text=${whatsappMensaje}`;
         modal.classList.remove("hidden");
-      });
+      };
+
+      const media = tarjeta.querySelector(".producto-media");
+      const detallesBtn = tarjeta.querySelector('[data-action="detalles"]');
+
+      if (media) {
+        media.addEventListener("click", (event) => {
+          event.stopPropagation();
+          abrirModal();
+        });
+
+        media.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            abrirModal();
+          }
+        });
+      }
+
+      if (detallesBtn instanceof HTMLButtonElement) {
+        detallesBtn.addEventListener("click", (event) => {
+          event.preventDefault();
+          abrirModal();
+        });
+      }
 
       contenedor.appendChild(tarjeta);
     });
