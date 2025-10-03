@@ -265,6 +265,35 @@ button {
   filter: brightness(1.05);
 }
 
+.header-admin {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.6rem;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--color-text);
+  font-weight: 600;
+  min-height: 44px;
+  font-size: 0.95rem;
+  transition: background 0.2s ease, transform 0.2s ease;
+  backdrop-filter: blur(var(--glass-blur));
+}
+
+.header-admin:hover,
+.header-admin:focus-visible {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--color-text);
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+.header-admin:focus-visible {
+  outline: 2px solid rgba(255, 151, 112, 0.6);
+  outline-offset: 2px;
+}
+
 @media (max-width: 767px) {
   .header-nav {
     display: none;
@@ -272,6 +301,12 @@ button {
 
   .header-bar {
     padding-inline: var(--container-padding-mobile);
+    gap: var(--space-12); /* Ajustar gap para mobile */
+  }
+
+  .header-admin {
+    padding: 0.65rem 1.2rem; /* Reducir padding en mobile */
+    font-size: 0.9rem;
   }
 }
 
