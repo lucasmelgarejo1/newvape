@@ -16,46 +16,51 @@
 
 
   <header class="site-header" id="inicio">
-    <div class="header-top">
+    <div class="header-glass">
       <div class="header-bar">
-        <div class="header-media" aria-hidden="true">
-          <video class="header-video" autoplay muted loop playsinline preload="metadata" poster="/assets/2023_1120_Ignite_Lifestyle_MikeKirschbaum_016_1_1000x.webp">
-            <source src="/assets/Ink-35508-1.mp4" type="video/mp4" />
-          </video>
-        </div>
-        <a class="header-logo" href="#inicio">VAPEZRT</a>
+        <a class="header-logo" href="#inicio" aria-label="Ir al inicio">
+          <span>VAPEZRT</span>
+        </a>
         <nav class="header-nav" aria-label="Secciones principales">
           <a href="#productos">Productos</a>
           <a href="#contacto">Contacto</a>
         </nav>
         <a class="header-cta" href="https://wa.me/5493487652952" target="_blank" rel="noopener">Comprar ahora</a>
       </div>
-      <div class="header-announcement" aria-live="polite">
-        <div class="anuncio-carrusel">
-          <div class="mensaje" id="mensaje-rotativo">📱 Seguinos en Instagram @vapezrt_</div>
-        </div>
-      </div>
     </div>
   </header>
 
-  <section class="hero" aria-labelledby="galeria-title">
-    <div class="section-container hero-gallery">
-      <div class="hero-gallery-main">
-        <div class="header-copy">
-          <span class="hero-badge">Experiencias premium</span>
-          <h1>Explorá nuestros sabores</h1>
-          <p>Los mejores pods y desechables, curados para que encuentres tu vapor ideal al instante.</p>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-surface">
+      <div class="hero-media">
+        <div class="hero-slide active" data-index="0" aria-hidden="false">
+          <img src="/assets/2023_1120_Ignite_Lifestyle_MikeKirschbaum_016_1_1000x.webp" alt="Dispositivo vape color negro iluminado" />
         </div>
-        <div class="slider">
-          <button class="slider-btn slider-btn-prev" aria-label="Anterior">&lt;</button>
-          <div class="slider-images">
-            <img class="slider-img active" src="/assets/2023_1120_Ignite_Lifestyle_MikeKirschbaum_016_1_1000x.webp" alt="Dispositivo vape color negro iluminado" />
-            <img class="slider-img" src="assets/Imagen de WhatsApp 2025-07-17 a las 22.23.09_bf985f76.webp.jpg" alt="Variedad de vapers sobre fondo azul" />
-            <img class="slider-img" src="/assets/Imagen de WhatsApp 2025-07-18 a las 01.27.53_af5c1526.jpg" alt="Detalle de pod con luces de neón" />
-          </div>
-          <button class="slider-btn slider-btn-next" aria-label="Siguiente">&gt;</button>
+        <div class="hero-slide" data-index="1" aria-hidden="true">
+          <img src="assets/Imagen de WhatsApp 2025-07-17 a las 22.23.09_bf985f76.webp.jpg" alt="Variedad de vapers sobre fondo azul" loading="lazy" />
+        </div>
+        <div class="hero-slide" data-index="2" aria-hidden="true">
+          <img src="/assets/Imagen de WhatsApp 2025-07-18 a las 01.27.53_af5c1526.jpg" alt="Detalle de pod con luces de neón" loading="lazy" />
         </div>
       </div>
+      <div class="hero-inner">
+        <div class="hero-message-card">
+          <span class="hero-badge">Experiencias premium</span>
+          <h1 id="hero-title">Explorá nuestros sabores</h1>
+          <p>Los mejores pods y desechables, curados para que encuentres tu vapor ideal al instante.</p>
+          <div class="hero-actions">
+            <a class="hero-btn hero-btn-primary" href="#productos">Ver productos</a>
+            <a class="hero-btn hero-btn-secondary" href="https://wa.me/5493487652952" target="_blank" rel="noopener">Asesoramiento</a>
+          </div>
+        </div>
+      </div>
+      <button class="hero-control hero-control-prev" type="button" aria-label="Mostrar imagen anterior">
+        <span aria-hidden="true">&#8592;</span>
+      </button>
+      <button class="hero-control hero-control-next" type="button" aria-label="Mostrar imagen siguiente">
+        <span aria-hidden="true">&#8594;</span>
+      </button>
+      <div class="hero-dots" role="tablist" aria-label="Cambiar imagen del hero"></div>
     </div>
   </section>
 
@@ -154,30 +159,159 @@
 <script src="scripts/main.js" defer></script>
 <script type="module" src="scripts/firebase.js"></script>
 <script>
-// Slider simple
-document.addEventListener('DOMContentLoaded', function() {
-  const images = document.querySelectorAll('.slider-img');
-  const prevBtn = document.querySelector('.slider-btn-prev');
-  const nextBtn = document.querySelector('.slider-btn-next');
+document.addEventListener('DOMContentLoaded', () => {
+  const slides = Array.from(document.querySelectorAll('.hero-slide'));
+  const prevBtn = document.querySelector('.hero-control-prev');
+  const nextBtn = document.querySelector('.hero-control-next');
+  const dotsContainer = document.querySelector('.hero-dots');
+  const AUTOPLAY_DELAY = 5000;
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let current = 0;
+  let autoplayId = null;
 
-  function showImage(idx) {
-    images.forEach((img, i) => {
-      img.classList.toggle('active', i === idx);
+  if (!slides.length) {
+    return;
+  }
+
+  const dots = [];
+
+  slides.forEach((slide, index) => {
+    slide.id = `hero-slide-${index}`;
+    slide.dataset.index = String(index);
+    slide.setAttribute('role', 'group');
+    slide.setAttribute('aria-roledescription', 'slide');
+    slide.setAttribute('aria-label', `${index + 1} de ${slides.length}`);
+    slide.setAttribute('aria-hidden', index === current ? 'false' : 'true');
+
+    if (dotsContainer) {
+      const dot = document.createElement('button');
+      dot.className = 'hero-dot';
+      dot.type = 'button';
+      dot.dataset.slide = String(index);
+      dot.setAttribute('role', 'tab');
+      dot.setAttribute('aria-controls', slide.id);
+      dot.setAttribute('aria-label', `Mostrar imagen ${index + 1} de ${slides.length}`);
+      dot.setAttribute('aria-selected', index === current ? 'true' : 'false');
+      dot.setAttribute('tabindex', index === current ? '0' : '-1');
+      dotsContainer.appendChild(dot);
+      dots.push(dot);
+    }
+  });
+
+  function goToSlide(index) {
+    current = (index + slides.length) % slides.length;
+    slides.forEach((slide, idx) => {
+      const isActive = idx === current;
+      slide.classList.toggle('active', isActive);
+      slide.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+    });
+
+    dots.forEach((dot, idx) => {
+      const isActive = idx === current;
+      dot.classList.toggle('active', isActive);
+      dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      dot.setAttribute('tabindex', isActive ? '0' : '-1');
     });
   }
 
-  prevBtn.addEventListener('click', () => {
-    current = (current - 1 + images.length) % images.length;
-    showImage(current);
+  function showNext() {
+    goToSlide(current + 1);
+  }
+
+  function showPrev() {
+    goToSlide(current - 1);
+  }
+
+  function stopAutoplay() {
+    if (autoplayId !== null) {
+      clearInterval(autoplayId);
+      autoplayId = null;
+    }
+  }
+
+  function startAutoplay() {
+    if (prefersReducedMotion.matches || slides.length < 2) {
+      return;
+    }
+
+    stopAutoplay();
+    autoplayId = window.setInterval(showNext, AUTOPLAY_DELAY);
+  }
+
+  function restartAutoplay() {
+    stopAutoplay();
+    startAutoplay();
+  }
+
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      showPrev();
+      restartAutoplay();
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      showNext();
+      restartAutoplay();
+    });
+  }
+
+  dots.forEach((dot) => {
+    dot.addEventListener('click', () => {
+      const target = Number(dot.dataset.slide || 0);
+      goToSlide(target);
+      restartAutoplay();
+    });
+
+    dot.addEventListener('keydown', (event) => {
+      const key = event.key;
+      if (key === 'Enter' || key === ' ') {
+        event.preventDefault();
+        const target = Number(dot.dataset.slide || 0);
+        goToSlide(target);
+        restartAutoplay();
+      }
+
+      if (key === 'ArrowRight' || key === 'ArrowLeft') {
+        event.preventDefault();
+        const delta = key === 'ArrowRight' ? 1 : -1;
+        const currentIndex = Number(dot.dataset.slide || 0);
+        const targetIndex = (currentIndex + delta + slides.length) % slides.length;
+        const targetDot = dots[targetIndex];
+        if (targetDot) {
+          targetDot.focus();
+          goToSlide(targetIndex);
+          restartAutoplay();
+        }
+      }
+    });
   });
 
-  nextBtn.addEventListener('click', () => {
-    current = (current + 1) % images.length;
-    showImage(current);
+  const handleMotionChange = (event) => {
+    if (event.matches) {
+      stopAutoplay();
+    } else {
+      startAutoplay();
+    }
+  };
+
+  if (typeof prefersReducedMotion.addEventListener === 'function') {
+    prefersReducedMotion.addEventListener('change', handleMotionChange);
+  } else if (typeof prefersReducedMotion.addListener === 'function') {
+    prefersReducedMotion.addListener(handleMotionChange);
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      stopAutoplay();
+    } else {
+      startAutoplay();
+    }
   });
 
-  showImage(current);
+  goToSlide(current);
+  startAutoplay();
 });
 </script>
 
