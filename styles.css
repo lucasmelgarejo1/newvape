@@ -1272,3 +1272,60 @@ button {
     min-height: 76vh;
   }
 }
+:root{
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --header-h-m: 68px;
+}
+html,body{overflow-x:hidden;}
+
+.header-bar{position:sticky;top:0;z-index:1000;backdrop-filter:saturate(120%) blur(6px);}
+@media (max-width:768px){
+  main, .page, .site-content{padding-top:var(--header-h-m);}
+  .header-logo, .header-admin, .header-cta{min-height:44px;}
+}
+
+/* Hero */
+@media (max-width:768px){
+  .hero{min-height:62vh;}
+  .hero-content{width:min(92vw,560px);padding:16px 18px;}
+  .hero h1{font-size:clamp(28px,7.2vw,36px);line-height:1.1;}
+  .hero p{font-size:clamp(14px,4vw,16px);}
+  .hero .btn{min-height:44px;padding:10px 16px;}
+  .hero .carousel-arrow{width:44px;height:44px;}
+}
+
+/* Grid 2 columnas en público y admin */
+@media (max-width:768px){
+  .productos, #admin-productos.productos{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:14px;
+    padding-inline:16px;
+  }
+  .producto{margin:0;border-radius:14px;}
+  .producto img, .producto__img{width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;display:block;}
+  .producto-title{font-size:clamp(12px,3.6vw,14px);}
+  .producto-sub, .producto-meta{font-size:clamp(11px,3.2vw,13px);}
+  .producto .badge-delete{top:8px;right:8px;transform:none;}
+}
+
+/* Formularios/filtros fluidos */
+@media (max-width:768px){
+  .search, .search input, .filters, .filters select{width:100%;max-width:100%;}
+}
+
+/* Secciones/typography */
+@media (max-width:768px){
+  section, .section{padding-block:48px;}
+  h2{font-size:clamp(20px,6vw,28px);}
+  p{font-size:clamp(14px,4vw,16px);}
+}
+
+/* FAB WhatsApp */
+.whatsapp-fab{right:16px;bottom:calc(16px + var(--safe-bottom));z-index:1100;}
+footer, .site-footer{padding-bottom:calc(24px + 72px);} /* espacio bajo FAB */
+
+/* Evitar 100vw que provoca desborde */
+.container-100vw, .full-bleed{width:100%;max-width:100%;}
+*{box-sizing:border-box;}
