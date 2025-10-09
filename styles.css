@@ -1246,6 +1246,67 @@ button {
   .modal-content {
     padding: var(--space-24);
   }
+
+  /* menos aire en la sección de búsqueda */
+  .busqueda-section{
+    padding-top: 16px;
+    padding-bottom: 10px;   /* antes era mucho mayor */
+    margin-bottom: 6px;     /* separa del grid */
+  }
+
+  /* el contenedor del grid empieza antes */
+  .productos-grid-section{
+    padding-top: 8px;
+    margin-top: 0;
+  }
+
+  /* si hay una tarjeta contenedora del buscador, compactarla */
+  .busqueda-section .card,
+  .busqueda-section .panel,
+  .busqueda-section .box{
+    padding: 14px 16px;
+    border-radius: 14px;  /* opcional: menor radio para que ocupe menos */
+  }
+
+  /* input de búsqueda sin margen extra */
+  .busqueda-section .search,
+  .busqueda-section input[type="search"],
+  .busqueda-section input[type="text"]{
+    margin-bottom: 8px;
+  }
+
+  /* Quitar márgenes por defecto de las secciones en mobile */
+  section, .section {
+    margin-block: 0;              /* elimina bordes verdes */
+  }
+
+  /* Hero más compacto */
+  .hero {
+    margin-block: 0;              /* por si heredó margin */
+    padding-top: 8px;             /* antes era mayor */
+    padding-bottom: 12px;
+  }
+
+  /* Tarjeta/vidrio del hero un poco más chica si existe */
+  .hero .hero-card,
+  .hero .glass,
+  .hero .content-box {
+    border-radius: 14px;
+    padding: 14px 16px;
+  }
+
+  /* Sección de búsqueda compacta */
+  .busqueda-section {
+    padding-top: 12px;
+    padding-bottom: 8px;
+    margin-bottom: 6px;           /* separación mínima con el grid */
+  }
+
+  /* Grid de productos arranca pegado */
+  .productos-grid-section {
+    padding-top: 8px;
+    margin-top: 0;
+  }
 }
 
 @media (max-width: 480px) {
@@ -1329,3 +1390,27 @@ footer, .site-footer{padding-bottom:calc(24px + 72px);} /* espacio bajo FAB */
 /* Evitar 100vw que provoca desborde */
 .container-100vw, .full-bleed{width:100%;max-width:100%;}
 *{box-sizing:border-box;}
+:root{
+  --header-offset: 68px; /* alto aprox del header en mobile */
+}
+
+/* scroll suave por defecto */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--header-offset); /* compensa el header */
+}
+
+/* respeta reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+/* si la sección de productos tiene id */
+#productos { scroll-margin-top: var(--header-offset); }
+
+/* en desktop el header suele ser más alto: ajustar si hace falta */
+@media (min-width: 769px) {
+  :root { --header-offset: 80px; }
+}
+
+/* COMMIT: fix(responsive): compactar padding entre buscador y grid en mobile */
