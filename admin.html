@@ -7,6 +7,16 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <!-- LIST-VIEW: toolbar estática para que el script la reutilice (Nuevo, Lista, búsqueda) -->
+  <div class="admin-toolbar">
+    <div class="admin-toolbar__inner">
+      <button id="btnAddTile" class="modal-action-primary" aria-label="Nuevo producto">Nuevo producto</button>
+      <input id="adminSearch" type="search" placeholder="Buscar por nombre..." aria-label="Buscar productos por nombre" class="hero-busqueda" style="max-width:320px;">
+      <button id="btn-grid"  class="modal-action-secondary" type="button" aria-pressed="true">Cards</button>
+      <button id="btn-lista" class="modal-action-secondary" type="button" aria-pressed="false">Lista</button>
+    </div>
+  </div>
+
   <main id="admin-root" class="admin-panel">Cargando panel…</main>
 
   <script type="module" src="scripts/admin.gate.js"></script>

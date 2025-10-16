@@ -1414,3 +1414,203 @@ html {
 }
 
 /* COMMIT: fix(responsive): compactar padding entre buscador y grid en mobile */
+
+/* LIST-VIEW: tabla admin */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+  font-size: 14px;
+}
+.admin-table th,
+.admin-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  text-align: left;
+  vertical-align: top;
+  white-space: nowrap;
+}
+.admin-table th { opacity: .85; font-weight: 600; }
+.admin-table td a { text-decoration: none; opacity: .85; }
+
+/* LIST-VIEW: tabla admin */
+.admin-table{width:100%;border-collapse:collapse;margin-top:16px;font-size:14px}
+.admin-table th,.admin-table td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left;vertical-align:top;white-space:nowrap}
+.admin-table th{opacity:.85;font-weight:600}
+.admin-table td a{text-decoration:none;opacity:.9}
+.btn[aria-pressed="true"], .modal-action-secondary[aria-pressed="true"]{
+  filter:brightness(1.2);
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--glass-border-strong);
+  color: var(--color-text);
+}
+@media (max-width:768px){
+  .admin-table{font-size:13px}
+}
+
+/* --- Admin toolbar centering --- */
+.admin-toolbar{
+  position: sticky;      /* si ya era sticky, mantenelo */
+  top: 0;
+  z-index: 100;
+  padding: 12px 0;
+}
+
+/* contenedor centrado */
+.admin-toolbar__inner{
+  max-width: 1200px;     /* ancho de contenido */
+  margin-inline: auto;   /* centra */
+  padding-inline: 16px;  /* respiro lateral */
+  display: flex;
+  align-items: center;
+  justify-content: center;   /* centra la fila */
+  gap: 12px;
+  flex-wrap: wrap;           /* que rompa línea en mobile */
+}
+
+/* que los elementos no desalineen el centrado */
+.admin-toolbar__inner .btn,
+.admin-toolbar__inner button{
+  flex: 0 0 auto;
+}
+
+/* el buscador no debe empujar la fila; tamaño fluido */
+.admin-toolbar__inner input[type="search"],
+.admin-toolbar__inner input[type="text"]{
+  flex: 0 1 clamp(220px, 32vw, 360px);
+  min-width: 200px;
+  max-width: 420px;
+}
+
+/* en pantallas grandes mantené la fila centrada */
+@media (min-width: 1024px){
+  .admin-toolbar__inner{
+    justify-content: center;
+  }
+}
+
+/* ===== LIST-VIEW mobile ===== */
+@media (max-width: 768px) {
+  /*
+    Cuando el contenedor de productos (#admin-productos) está en modo lista (.admin-list),
+    se anula el `display: grid` para que la tabla pueda ocupar el 100% del ancho.
+    Esto solo afecta a la vista de lista en mobile, no a la de cards.
+  */
+  #admin-productos:has(.admin-list) {
+    display: block;
+    padding-inline: 0; /* El padding se maneja en el contenedor del grid */
+  }
+
+  /* Ajustes para la tabla en modo lista en mobile */
+  .admin-list .admin-table {
+    font-size: 13px; /* Reducir fuente para mejor ajuste */
+    white-space: normal; /* Permitir que el texto largo se ajuste */
+  }
+
+  /* Mantener la cabecera visible */
+  .admin-list .admin-table thead {
+    display: table-header-group;
+  }
+
+  /* Mantener las filas como filas de tabla */
+  .admin-list .admin-table tr {
+    display: table-row;
+    background: none;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* Celdas con padding ajustado y alineación vertical */
+  .admin-list .admin-table th,
+  .admin-list .admin-table td {
+    display: table-cell;
+    padding: 12px 8px; /* Más padding vertical, menos horizontal */
+    border-bottom: 1px solid var(--glass-border);
+  }
+}
+
+/* ===== Admin Stats ===== */
+.admin-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+  gap: 16px;
+  margin: 20px 0;
+  padding-inline: 16px; /* Alinea con el padding del grid de productos */
+}
+.stat-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  padding: 14px 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  backdrop-filter: blur(8px);
+}
+.stat-card .stat-label {
+  font-size: 12px;
+  opacity: .7;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.stat-card .stat-value {
+  font-size: clamp(18px, 2.8vw, 24px);
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Mobile: quitar padding lateral en el panel y lista */
+@media (max-width: 480px) {
+  /* Ajustar padding lateral para que la tabla no se pegue a los bordes */
+  #admin-root.admin-panel {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+    box-sizing: border-box;
+  }
+
+  /* contenedor donde vive la lista */
+  .section-container,
+  #admin-productos.admin-list {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Mobile: que las 3 tarjetas de stats entren en una fila sin scroll */
+  .admin-stats {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 8px !important;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden; /* sin scroll */
+    box-sizing: border-box;
+  }
+
+  .admin-stats .stat-card {
+    padding: 25px !important; /* más compacto */
+    border-radius: 10px;
+    min-width: 0; /* evita desbordes */
+    box-sizing: border-box;
+  }
+
+  .admin-stats .stat-label {
+    font-size: 10px !important; /* título pequeño */
+    line-height: 1.2;
+    opacity: 0.9;
+    white-space: nowrap;
+  }
+
+  .admin-stats .stat-value {
+    font-size: 16px !important; /* número legible pero compacto */
+    line-height: 1.2;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+}
