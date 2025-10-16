@@ -1563,41 +1563,38 @@ html {
 
 /* Mobile: quitar padding lateral en el panel y lista */
 @media (max-width: 480px) {
-  /* Ajustar padding lateral para que la tabla no se pegue a los bordes */
   #admin-root.admin-panel {
-    padding-left: 8px !important;
-    padding-right: 8px !important;
-    box-sizing: border-box;
+    padding-left: 0 !important;
+    padding-right: 0 !important; /* opcional, para simetría */
   }
 
   /* contenedor donde vive la lista */
-  .section-container,
-  #admin-productos.admin-list {
-    padding-left: 8px !important;
-    padding-right: 8px !important;
+  .section-container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
     margin-left: 0 !important;
     margin-right: 0 !important;
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
   }
 
-  /* Mobile: que las 3 tarjetas de stats entren en una fila sin scroll */
-  .admin-stats {
-    display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important;
-    gap: 8px !important;
+  /* wrapper de la tabla de lista */
+  #admin-productos.admin-list,
+  #admin-productos .list-table,
+  .admin-list .list-table {
     width: 100%;
     max-width: 100%;
-    overflow: hidden; /* sin scroll */
-    box-sizing: border-box;
   }
 
-  .admin-stats .stat-card {
-    padding: 25px !important; /* más compacto */
-    border-radius: 10px;
-    min-width: 0; /* evita desbordes */
-    box-sizing: border-box;
+  /* evitá que algo agregue gutter extra */
+  .admin-panel .container,
+  .productos-grid-section {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* separá un poco la toolbar del borde */
+  .admin-toolbar {
+    padding-left: 8px;
+    padding-right: 8px;
   }
 
   .admin-stats .stat-label {
